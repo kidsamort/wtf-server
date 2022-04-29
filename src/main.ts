@@ -3,15 +3,12 @@ import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
 
 async function start() {
-  const PORT = process.env.PORT || 5000;
   const app = await NestFactory.create(AppModule);
 
   app.enableCors();
   app.use(cookieParser());
+  await app.listen(process.env.PORT || 3000);
 
-  await app.listen(PORT, () =>
-    console.log(`Server started on the url: http://localhost:${PORT}`),
-  );
 }
 start()
   .then(() => console.log(`success start `))

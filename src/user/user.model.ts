@@ -31,6 +31,6 @@ export class User extends Model<User, UserCreationAttrs> {
   @Column({ type: DataType.BOOLEAN, defaultValue: false })
   activation: boolean;
 
-  @Column({ type: DataType.NUMBER, allowNull: true })
+  @Column({ type: DataType.INTEGER, allowNull: true })
   code: number;
 }

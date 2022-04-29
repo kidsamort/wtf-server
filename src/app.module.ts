@@ -3,6 +3,9 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { User } from './user/user.model';
+import { Token } from './auth/token/token.model';
+import { TokenModule } from './auth/token/token.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   controllers: [],
@@ -25,9 +28,11 @@ import { User } from './user/user.model';
           rejectUnauthorized: false,
         },
       },
-      models: [User],
+      models: [User, Token],
     }),
     UserModule,
+    TokenModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

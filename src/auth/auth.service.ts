@@ -53,7 +53,7 @@ export class AuthService {
     response: Response,
   ): Promise<AuthResponse> {
     const user = await this.validateUser(userDto);
-    this.tokenService.cleanExpiredToken(user.id);
+    await this.tokenService.cleanExpiredToken(user.id);
 
     const token = this.tokenService.createToken(user);
     const tokenDB = await this.tokenService.saveToken(user.id, token);

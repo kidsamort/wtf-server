@@ -6,13 +6,13 @@ import { TokenService } from './token.service';
 
 @Controller('token')
 export class TokenController {
-  constructor(private tokenServicee: TokenService) {}
+  constructor(private tokenService: TokenService) {}
 
   @Get('/refresh')
   refresh(
     @Body() token: RefreshReqToken,
     @Res({ passthrough: true }) response: Response,
   ): Promise<AuthResponse> {
-    return this.tokenServicee.refresh(token.refreshToken, response);
+    return this.tokenService.refresh(token.refreshToken, response);
   }
 }

@@ -8,7 +8,6 @@ async function start() {
   app.enableCors();
   app.use(cookieParser());
   await app.listen(process.env.PORT || 3000);
-
 }
 start()
   .then(() => console.log(`success start `))

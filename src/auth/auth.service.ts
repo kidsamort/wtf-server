@@ -42,8 +42,7 @@ export class AuthService {
     console.log(response.cookie);
 
     return {
-      email: userDto.email,
-      name: userDto.name,
+      user: { email: userDto.email, name: userDto.name },
       accessToken: tokenDb.accessToken,
     };
   }
@@ -62,8 +61,7 @@ export class AuthService {
       httpOnly: true,
     });
     return {
-      name: user.name,
-      email: user.email,
+      user: { name: user.name, email: user.email },
       accessToken: tokenDB.accessToken,
     };
   }

@@ -1,6 +1,5 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Controller, Post, UseGuards } from '@nestjs/common';
 import { TokenAuthGuard } from 'auth/token/tokenAuth.guard';
-import { CreateUserDto } from './dto/createUser-dto';
 import { User } from './user.model';
 import { UserService } from './user.service';
 
@@ -10,7 +9,7 @@ export class UserController {
 
   @UseGuards(TokenAuthGuard)
   @Post()
-  createUser(@Body() userDto: CreateUserDto): Promise<User[]> {
+  createUser(): Promise<User[]> {
     return this.usersService.getAllUsers();
   }
 }

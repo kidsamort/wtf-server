@@ -1,5 +1,4 @@
 export class AuthResponse {
-  readonly name: string;
-  readonly email: string;
+  readonly user: { name: string; email: string };
   readonly accessToken: string;
 }

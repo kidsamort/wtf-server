@@ -129,8 +129,7 @@ export class TokenService {
       httpOnly: true,
     });
     return {
-      name: user.name,
-      email: user.email,
+      user: { name: user.name, email: user.email },
       accessToken: tokens.accessToken,
     };
   }

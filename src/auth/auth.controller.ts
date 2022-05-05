@@ -1,5 +1,5 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
-import { Response } from 'express';
+import { Body, Controller, Post, Req, Res } from '@nestjs/common';
+import { Response, Request } from 'express';
 import { AuthService } from './auth.service';
 import { AuthRequestDto } from './dto/authRequest.dto';
 import { AuthResponse } from './dto/authResponse.dto';
@@ -8,12 +8,12 @@ import { AuthResponse } from './dto/authResponse.dto';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('/login')
+  @Post('/signin')
   login(
     @Body() userDto: AuthRequestDto,
     @Res({ passthrough: true }) response: Response,
   ): Promise<AuthResponse> {
-    return this.authService.login(userDto, response);
+    return this.authService.signin(userDto, response);
   }
 
   @Post('/signup')
@@ -22,5 +22,12 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<AuthResponse> {
     return await this.authService.signUp(userDto, response);
+  }
+  @Post('/logout')
+  async logout(
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    return await this.authService.logout(request, response);
   }
 }

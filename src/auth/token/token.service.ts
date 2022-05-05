@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/sequelize';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 
 import { User } from 'user/user.model';
 import { UserService } from 'user/user.service';
@@ -99,7 +99,8 @@ export class TokenService {
     }
   }
 
-  async refresh(token, response: Response): Promise<AuthResponse> {
+  async refresh(request: Request, response: Response): Promise<AuthResponse> {
+    const { refreshToken: token } = request.cookies;
     if (!token) {
       throw new UnauthorizedException({
         message: 'Пользователь не авторизован',
@@ -119,6 +120,7 @@ export class TokenService {
       });
     }
     await this.removeToken(token);
+    await this.cleanExpiredToken(userData.id);
     const user = await this.userService.getUserByEmail(userData.email);
     const tokens = this.createToken(user);
 

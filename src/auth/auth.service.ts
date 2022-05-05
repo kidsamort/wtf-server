@@ -10,7 +10,7 @@ import { AuthResponse } from './dto/authResponse.dto';
 import * as bcrypt from 'bcryptjs';
 import { TokenService } from './token/token.service';
 import { User } from 'user/user.model';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -23,8 +23,8 @@ export class AuthService {
     userDto: AuthRequestDto,
     response: Response,
   ): Promise<AuthResponse> {
-    const candidat = await this.userService.getUserByEmail(userDto.email);
-    if (candidat) {
+    const candidate = await this.userService.getUserByEmail(userDto.email);
+    if (candidate) {
       throw new HttpException('Почта уже используется', HttpStatus.BAD_REQUEST);
     }
     const hashPassword = await bcrypt.hash(userDto.password, 5);
@@ -39,7 +39,6 @@ export class AuthService {
       maxAge: 30 * 24 * 60 * 60 * 1000,
       httpOnly: true,
     });
-    console.log(response.cookie);
 
     return {
       user: { email: userDto.email, name: userDto.name },
@@ -47,7 +46,7 @@ export class AuthService {
     };
   }
 
-  async login(
+  async signin(
     userDto: AuthRequestDto,
     response: Response,
   ): Promise<AuthResponse> {
@@ -64,6 +63,17 @@ export class AuthService {
       user: { name: user.name, email: user.email },
       accessToken: tokenDB.accessToken,
     };
+  }
+
+  async logout(request: Request, response: Response): Promise<any> {
+    try {
+      const { refreshToken } = request.cookies;
+      const token = await this.tokenService.removeToken(refreshToken);
+      response.clearCookie('refreshToken');
+      return { logout: token };
+    } catch (e) {
+      throw new UnauthorizedException({ message: e });
+    }
   }
 
   private async validateUser(userDto: AuthRequestDto): Promise<User> {

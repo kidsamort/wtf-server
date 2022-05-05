@@ -129,8 +129,9 @@ export class TokenService {
     response.cookie('refreshToken', tokens.refreshToken, {
       maxAge: 30 * 24 * 60 * 60 * 1000,
       httpOnly: true,
-      sameSite: 'none',
+      sameSite: 'lax',
       secure: true,
+      domain: process.env.REACT_APP_URL,
     });
     return {
       user: { name: user.name, email: user.email },

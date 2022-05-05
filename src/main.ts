@@ -9,6 +9,7 @@ async function start() {
       credentials: true,
     },
   });
+  app.setGlobalPrefix('api');
   // app.use(
   //   session({
   //     cookie: {

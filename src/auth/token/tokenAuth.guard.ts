@@ -42,8 +42,6 @@ export class TokenAuthGuard implements CanActivate {
       req.user = user;
       return true;
     } catch (e) {
-      console.log(e);
-
       throw new UnauthorizedException({
         message: 'Пользователь не авторизован',
       });

@@ -40,7 +40,7 @@ export class AuthService {
       httpOnly: true,
       sameSite: 'lax',
       secure: true,
-      domain: process.env.REACT_APP_URL,
+      domain: process.env.REACT_APP_WEB,
     });
 
     return {
@@ -63,7 +63,7 @@ export class AuthService {
       httpOnly: true,
       sameSite: 'lax',
       secure: true,
-      domain: process.env.REACT_APP_URL,
+      domain: process.env.REACT_APP_WEB,
     });
     return {
       user: { name: user.name, email: user.email },

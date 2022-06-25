@@ -43,7 +43,7 @@ export class AuthService {
     });
 
     return {
-      user: { email: userDto.email, name: userDto.name },
+      user: { email: userDto.email },
       accessToken: tokenDb.accessToken,
     };
   }
@@ -64,7 +64,7 @@ export class AuthService {
       secure: true,
     });
     return {
-      user: { name: user.name, email: user.email },
+      user: { email: user.email },
       accessToken: tokenDB.accessToken,
     };
   }

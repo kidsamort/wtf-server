@@ -11,7 +11,6 @@ import { Token } from './token.model';
 export interface jwtPayload {
   id: number;
   email: string;
-  name: string;
 }
 export interface IToken {
   accessToken: string;
@@ -28,7 +27,7 @@ export class TokenService {
 
   // TODO: Усложнить paylod
   createToken(user: User): IToken {
-    const payload = { id: user.id, email: user.email, name: user.name };
+    const payload = { id: user.id, email: user.email };
 
     const accessToken = this.jwtService.sign(payload, {
       secret: process.env.JWT_ACCES_SECRET,
@@ -133,7 +132,7 @@ export class TokenService {
       secure: true,
     });
     return {
-      user: { name: user.name, email: user.email },
+      user: { email: user.email },
       accessToken: tokens.accessToken,
     };
   }

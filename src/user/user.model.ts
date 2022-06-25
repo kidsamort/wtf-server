@@ -1,8 +1,14 @@
-import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
+import {
+  Column,
+  DataType,
+  HasMany,
+  HasOne,
+  Model,
+  Table,
+} from 'sequelize-typescript';
 import { Token } from 'auth/token/token.model';
 
 interface UserCreationAttrs {
-  name: string;
   email: string;
   password: string;
 }
@@ -17,14 +23,14 @@ export class User extends Model<User, UserCreationAttrs> {
   })
   id: number;
 
-  @Column({ type: DataType.STRING, allowNull: false })
-  name: string;
-
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   email: string;
 
   @Column({ type: DataType.STRING, allowNull: false })
   password: string;
+
+  // @HasOne(() => Activation)
+  // activation: Activation;
 
   @HasMany(() => Token)
   tokens: Token[];
